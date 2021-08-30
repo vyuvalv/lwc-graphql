@@ -33,3 +33,5 @@ $RECYCLE.BIN/
 .husky
 
 src/client/resources/assets
+.env
+package-lock.json

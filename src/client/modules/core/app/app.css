@@ -1,4 +1,11 @@
+:host {
+    /* Sets textarea height */
+    --sds-c-textarea-sizing-min-height:15rem;
+}
 .app-container {
     width: 100%;
     height: var( --container-height);
+}
+.app-content {
+    height:100%;
 }

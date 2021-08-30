@@ -10,9 +10,8 @@ export function createUUID() {
 /*
  * Check all required form inputs are populated and pop input validity on each
  */
-export function reportFormValidity(inputs, message = 'Input is required') {
+export function reportFormValidity(inputs) {
     return [...inputs].reduce((validSoFar, inputField) => {
-        if (!inputField.checkValidity()) { inputField.setCustomValidity(message) };
         inputField.reportValidity();
         return validSoFar && inputField.checkValidity();
     }, true);

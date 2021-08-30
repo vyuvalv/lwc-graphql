@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import { getData } from '../../data/services/services';
 
-const menuTabs = ['home', 'debug'];
+const menuTabs = ['home', 'salesforce'];
 const LOGO = './resources/lwc.png';
 
 export default class App extends LightningElement {
@@ -25,9 +25,7 @@ export default class App extends LightningElement {
     @track errors;
     loading = false;
 
-    connectedCallback() {
-
-    }
+    connectedCallback() {}
 
     // Change Tab and Browser path
     handleActiveTab(event) {
@@ -41,26 +39,17 @@ export default class App extends LightningElement {
         this.message = event.target.value;
     }
 
-    handleClick() {
+    async handleSendMessage() {
+        // Get Message Value
+        const messageBody = this.message.length > 1 ? this.message : 'None';
         // Build query
-        let graphQuery = { query: `{}` };
-
-        switch (this.pathName) {
-            case 'home':
-                // check message exists
-                graphQuery =  this.message.length > 1 ? { query: `{ hello(message:"${this.message}") }` }: false;
-                break;
-        }
-        if (graphQuery) {
-            // Run Query
-            this.loading = true;
-            this.fetchData(graphQuery);
-        }
-    }
-    // Call GraphQL Server
-    async fetchData(query) {
+        const graphQuery = {
+            query: `{ hello(message:"${messageBody}") }`
+        };
+        // Run Query
+        this.loading = true;
         try {
-            const response = await getData(query);
+            const response = await getData(graphQuery);
             if (response.data) {
                 console.log('SUCCESS ' + JSON.stringify(response));
                 this.loading = false;
@@ -70,6 +59,68 @@ export default class App extends LightningElement {
         } catch (err) {
             console.log('error : ' + JSON.stringify(err));
         }
+    }
+
+    // Handle Salesforce Login
+    isOnline;
+    isOffline = !this.isOnline;
+
+    async handleLogin(event) {
+        // gets input values from child component
+        const credentials = event.detail;
+        const graphQuery = {
+            query: `{
+                login( credentials: ${JSON.stringify(credentials.formInputs).replace(/"([^"]+)":/g, '$1:')} ){
+                    userId
+                    accessToken
+                    loggedInDate
+                    loggedInUser { Name }
+                }
+            }`
+        }
+        // Run Query
+        this.loading = true;
+        try {
+            const response = await getData(graphQuery);
+            if (response.data) {
+                console.log('Login Succesfully ' + JSON.stringify(response));
+                this.loading = false;
+                this._logger = response.data;
+                this.toggleOnline(true);
+            }
+
+        } catch (err) {
+            console.log('Error on login : ' + JSON.stringify(err));
+        }
+    }
+
+    async handleLogout(event) {
+        const graphQuery = {
+            query: `{
+                logout{
+                    success
+                    timestamp
+                }
+            }`
+        }
+        try {
+            this.loading = true;
+            const response = await getData(graphQuery);
+            if (response.data) {
+                console.log('Logout Succesfully ' + JSON.stringify(response));
+                this.loading = false;
+                this._logger = response.data;
+                this.toggleOnline(false);
+            }
+
+        } catch (err) {
+            console.log('error : ' + JSON.stringify(err));
+        }
+    }
+
+    toggleOnline(toggle) {
+        this.isOnline = toggle;
+        this.isOffline = !toggle;
     }
 
     // handle messages from child components

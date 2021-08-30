@@ -8,7 +8,7 @@
 - Schema Stiching to complete payload from callouts
 
 ## Quick Preview
-![Preview](./docs/Hola.png)
+![Preview](./docs/GRAPHQL_HelloWorld.png)
 
 
 ## How to start?
@@ -26,8 +26,7 @@
         * `graphql` - GraphQL library
         * `express-graphql` - GraphQL adapter for Express Server
         * `jsforce` - Connection to Salesforce
-        * `axios` - Making Rest Calls easier
-        * `dotenv`- Storing parameters used for the connection to Salesforce Connected App option
+        * `dotenv`- Storing parameters used for the connection to Salesforce Connected App option - will store the credentials for the org
 
     ```json
     "dependencies": {
