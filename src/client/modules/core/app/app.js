@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import { getData, postData } from '../../data/services/services';
+import { getData } from '../../data/services/services';
 
 const menuTabs = ['home', 'debug'];
 const LOGO = './resources/lwc.png';
@@ -19,8 +19,11 @@ export default class App extends LightningElement {
 
     @track alert = {};
     showAlert = false;
+
+    message = 'Whoo hooo!!';
     @track _logger = 'Nothing to show yet';
     @track errors;
+    loading = false;
 
     connectedCallback() {
 
@@ -33,27 +36,39 @@ export default class App extends LightningElement {
         this.navigate(activeTab);
     }
 
-    async handleFetch() {
-        try {
-            const payload = await getData('hello');
-            console.log('get data :', payload.data);
-            this._logger = payload.data;
+    // Intro input message
+    handleInputChange(event) {
+        this.message = event.target.value;
+    }
+
+    handleClick() {
+        // Build query
+        let graphQuery = { query: `{}` };
+
+        switch (this.pathName) {
+            case 'home':
+                // check message exists
+                graphQuery =  this.message.length > 1 ? { query: `{ hello(message:"${this.message}") }` }: false;
+                break;
         }
-        catch (error) {
-            console.log('error ', error);
-            this.errors = error;
+        if (graphQuery) {
+            // Run Query
+            this.loading = true;
+            this.fetchData(graphQuery);
         }
     }
-    async handlePost() {
+    // Call GraphQL Server
+    async fetchData(query) {
         try {
-            const request = { message: 'Hellow' };
-            const payload = await postData('MyTopic', request);
-            console.log('post data ', payload.data);
-            this._logger = payload.data;
-        }
-        catch (error) {
-            console.log('error ' , error);
-            this.errors = error;
+            const response = await getData(query);
+            if (response.data) {
+                console.log('SUCCESS ' + JSON.stringify(response));
+                this.loading = false;
+                this._logger = response.data;
+            }
+
+        } catch (err) {
+            console.log('error : ' + JSON.stringify(err));
         }
     }
 

@@ -3,6 +3,9 @@ const compression = require('compression');
 const helmet = require('helmet');
 const express = require('express');
 const path = require('path');
+// GraphQL
+const { graphqlHTTP } = require('express-graphql');
+const rootSchema = require('./schema/root');
 
 const app = express();
 // ACTIVATE MODULES
@@ -14,21 +17,14 @@ const SERVER_URL = `http://${HOST}:${PORT}`;
 // PRODUCTION BUILD
 const DIST_DIR = './dist';
 
-// API Sample Endpoints 
-
-// GET
-app.get("/api/v1/data", (req, res) => {
-    // Grab query parameters from URL
-    const query = req.query;
-    res.send({ data: { query, success: true } });
-});
-// POST
-app.post("/api/v1/service/:type", (req, res) => {
-    // Grab parameters from URL Path
-    const parameters = req.params.type;
-    // Grab body request payload
-    const body = req.body;
-    res.send({ data: { parameters, body } });
+// GraphQL Endpoint for all callouts
+app.use('/api/graphql', async (req, res) => {
+    // GraphQL Configuration
+    graphqlHTTP({
+        schema: rootSchema,
+        graphiql: true,
+        context: req
+    })(req, res);
 });
 
 app.use(express.static(DIST_DIR));

@@ -1,20 +1,9 @@
 /*
- * GET Data From Server
+ * Interact with GraphQL Data From Server
  */
-export async function getData(topic) {
-    const endpoint = `/api/v1/data?topic=${topic}`;
-    try {
-        const response = await fetch(endpoint);
-        return response.json();
-    } catch (e) {
-        return e;
-    }
-}
-/*
- * POST Data to Server
- */
-export async function postData(topic, body) {
-    const endpoint = `/api/v1/service/${topic}`;
+export async function getData(query) {
+    const endpoint = `/api/graphql`;
+    console.log('query : ' + query.query);
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -22,7 +11,7 @@ export async function postData(topic, body) {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(query)
         });
         return response.json();
     } catch (e) {
