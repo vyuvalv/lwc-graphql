@@ -1,6 +1,6 @@
 # Using LWC OSS With GraphQL - Starter Kit
 - Official Documentation - https://lwc.dev/ 
-- This Project is using Lightning Web Components OSS - Starter Kit was cloned from `https://github.com/vyuvalv/lwc-oss`
+- This Project is using Lightning Web Components OSS - Starter Kit was cloned from [`vyuvalv/lwc-oss`](https://github.com/vyuvalv/lwc-oss)
 
 ## GraphQL Demo
 - Includes a `Hello World` example using GraphQL
