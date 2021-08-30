@@ -1,0 +1,61 @@
+<template>
+    <div class="app-container slds-grid slds-grid_vertical slds-theme_default">
+    <!-- Messages -->
+    <c-notifications if:true={showAlert} errors={errors} alert={alert} onclose={hideAlert}></c-notifications>
+    <!-- HEADER -->
+    <div class="app-header slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-theme_info slds-p-around_small">
+        <div class="slds-grid slds-grid_vertical-align-center app-header-title">
+            <img src={logoImage} width="50px"></img>
+            <p class="slds-text-heading_large">LWC OSS With GraphQL - Starter Kit</p> 
+        </div>
+        <div class="slds-grid slds-grid_align-center">
+            <!-- RUN API CALLS -->
+            <lightning-button-icon icon-name="utility:send" variant="border-inverse" onclick={handlePost}></lightning-button-icon>
+            <lightning-button-icon class="slds-p-left_x-small" icon-name="utility:rotate" variant="brand" onclick={handleFetch}></lightning-button-icon>
+        </div>
+     </div>
+    <!-- CONTENT -->
+    <div class="app-content slds-scrollable_y">
+        <!-- TABS -->
+        <lightning-tabset variant="scoped" active-tab-value={pathName}>
+            <!-- HOME TAB -->
+            <lightning-tab icon-name="utility:fallback" label="HOME" value="home" onactive={handleActiveTab}>
+                <lightning-card icon-name="utility:home" title={pathName}>
+                    <div slot="actions" class="slds-grid slds-grid_align-center">
+                        <!-- RUN GRAPH QL -->
+                        <lightning-button-icon icon-name="utility:refresh" variant="brand" onclick={handleClick}></lightning-button-icon>
+                    </div>
+                    <div class="card-body slds-p-around_small">
+                        <div class="slds-grid request">
+                            <!-- Message Input -->
+                            <lightning-input class="slds-align-content-center" required name="messageInput" value={message} label="Request message" field-level-help="Whatever you send you will get back via GraphQL" onchange={handleInputChange}></lightning-input>
+                            <!-- RUN GRAPH QL -->
+                            <lightning-button class="slds-p-left_x-small slds-align-bottom" label="Call GraphQL" variant="destructive" onclick={handleClick}></lightning-button>
+                        </div>
+                        <!-- RESPONSE -->
+                        <div class="slds-grid slds-grid_vertical slds-grid_vertical-align-center">
+                            <!-- Loading -->
+                            <lightning-spinner if:true={loading} variant="brand" alternative-text="loading..."></lightning-spinner>
+                            <lightning-textarea label="Response" value={logger} class="slds-size_1-of-1" disabled></lightning-textarea>
+                        </div>
+                    </div>
+                </lightning-card>
+            </lightning-tab>
+            <lightning-tab icon-name="utility:description" label="DEBUG" value="debug" onactive={handleActiveTab}>
+                <!-- DEBUG Response Preview --> 
+                 <lightning-textarea label="Response" value={logger} class="slds-size_1-of-1" disabled></lightning-textarea>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="app-footer slds-box_small slds-grid slds-grid_align-center slds-action-overflow_touch__footer">
+        <!-- DOCS -->
+        <a href="https://lwc.dev" class="slds-button slds-button_brand" target="_blank">Learn LWC</a>
+        <a href="https://graphql.org" class="slds-button slds-button_neutral slds-theme_inverse" target="_blank">Learn GraphQL</a>
+        <a href="https://developer.salesforce.com/tools/sfdxcli" class="slds-button slds-button_neutral slds-theme_error" target="_blank">Learn SFDX</a>
+        <a href="https://jsforce.github.io/document/" class="slds-button slds-button_neutral slds-theme_warning" target="_blank">Learn JSForce</a>
+    </div>
+
+    </div>
+</template>
