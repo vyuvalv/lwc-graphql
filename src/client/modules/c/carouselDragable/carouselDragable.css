@@ -1,0 +1,191 @@
+:host{
+    --slider-height:20rem;
+    --slide-layer-900:900;
+    --slide-layer-800:800;
+}
+.carousel-wrapper {
+    overflow: hidden;
+    width: 90%;
+    margin: auto;
+}
+.carousel-wrapper * {
+    box-sizing: border-box;
+}
+.carousel {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.carousel-image {
+    width: 100%;
+    min-width: 5rem;
+    height: 100%;
+}
+.carousel-title{
+    position: absolute;
+    bottom: 0;
+    font-size: large;
+    font-weight: bold;
+}
+.carousel-slide-item {
+    opacity: 0;
+    position: absolute;
+    top:0;
+    width: 100%;
+    height: var(--slider-height);
+    margin: auto;
+    padding: 1rem 4rem;
+    z-index: 100;
+    transition: transform .5s, opacity .5s, z-index .5s;
+}
+
+.carousel-slide-item.initial,
+.carousel-slide-item.active {
+    opacity: 1;
+    position: relative;
+    z-index: var(--slide-layer-900);
+}
+
+/* Set 'z-index' to sit behind our '.active' item. */
+.carousel-slide-item.prev,
+.carousel-slide-item.next {
+    z-index: var(--slide-layer-800);
+}
+/* Translate previous item to the left */
+.carousel-slide-item.prev {
+    transform: translateX(-100%);
+}
+
+/* Translate next item to the right */
+.carousel-slide-item.next {
+    transform: translateX(100%);
+}
+  
+/* Style navigation buttons to sit in the middle, either side of the carousel. */
+.carousel-button-back,
+.carousel-button-next {
+    position: absolute;
+    top:50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: #FFF;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    cursor: pointer; 
+    z-index: 1001;
+    border:1px solid black;
+  /*  opacity: 0;  Hide buttons until carousel is initialised 
+    transition:opacity 1s;*/
+  }
+  
+  .carousel-button-back {
+    left:0;
+  }
+  
+  .carousel-button-next {
+    right:0;
+  }
+  
+  /* Use pseudo elements to insert arrows inside of navigation buttons */
+  .carousel-button-back::after,
+  .carousel-button-next::after {
+    content: " ";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 54%;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    transform: translate(-50%, -50%) rotate(135deg);
+  }
+  
+  .carousel-button-next::after {
+    left: 47%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+
+
+
+
+/* *** */
+
+.slider-wrapper {
+    margin: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+  /* https://webdesign.tutsplus.com/tutorials/how-to-build-a-simple-carousel-with-vanilla-javascript--cms-41734 */
+.slides-container {
+    width: 100%;
+    height: var(--slider-height);
+    display: flex;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+  
+.slide-arrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 4rem;
+    background-color: white;
+    border: none;
+    width: 2rem;
+    font-size: 3rem;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 100ms;
+}
+
+.slide-arrow-left {
+    left: 0;
+    padding-left: 0.25rem;
+    border-radius: 0 2rem 2rem 0;
+}
+.slide-arrow-right {
+    right: 0;
+    padding-left: 0.75rem;
+    border-radius: 2rem 0 0 2rem;
+}
+  
+.slide-arrow:hover,
+.slide-arrow:focus {
+    opacity: 1;
+}
+  
+.slide {
+    width: 100%;
+    height: 100%;
+    flex: 1 0 100%;
+}
+  
+.slide:nth-child(1) {
+    background-color: #49b293;
+}
+  
+.slide:nth-child(2) {
+    background-color: #b03532;
+}
+  
+.slide:nth-child(3) {
+    background-color: #6a478f;
+    margin: 0;
+}
+  
+.slide:nth-child(4) {
+    background-color: #da6f2b;
+    margin: 0;
+}
+  
