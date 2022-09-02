@@ -6,39 +6,31 @@
     <div class="app-header slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-theme_info slds-p-around_small">
         <div class="slds-grid slds-grid_vertical-align-center app-header-title">
             <img src={logoImage} width="50px"></img>
-            <p class="slds-text-heading_large">LWC OSS With GraphQL - Starter Kit</p> 
+            <p class="slds-text-heading_large">WordPress Blog Posts</p> 
         </div>
      </div>
     <!-- CONTENT -->
     <div class="app-content slds-scrollable_y">
         <!-- TABS -->
+        <div class="app-carousel">
+            <c-carousel-banners>
+                
+            </c-carousel-banners>
+            <!-- <c-carousel></c-carousel> -->
+        </div>
         <lightning-tabset variant="scoped" active-tab-value={pathName}>
             <!-- HOME TAB -->
             <lightning-tab icon-name="utility:fallback" label="HOME" value="home" onactive={handleActiveTab}>
-                <lightning-card icon-name="utility:home" title="Hello World GraphQL">
-                    <div class="card-body slds-p-around_small">
-                        <div class="slds-grid request">
-                            <!-- Message Input -->
-                            <lightning-input class="slds-align-content-center" required name="messageInput" value={message} label="Request message" field-level-help="Whatever you send you will get back via GraphQL" onchange={handleInputChange}></lightning-input>
-                            <!-- RUN GRAPH QL -->
-                            <lightning-button class="slds-p-left_x-small slds-align-bottom" label="Call GraphQL" variant="destructive" onclick={handleSendMessage}></lightning-button>
-                        </div>
-                        <!-- RESPONSE -->
-                        <div class="slds-grid slds-grid_vertical slds-grid_vertical-align-center">
-                            <!-- Loading -->
-                            <lightning-spinner if:true={loading} variant="brand" alternative-text="loading..."></lightning-spinner>
-                            <lightning-textarea label="Response" value={logger} class="slds-size_1-of-1" disabled></lightning-textarea>
-                        </div>
-                    </div>
-                </lightning-card>
+                <!-- Loading -->
+                <lightning-spinner if:true={loading} variant="brand" alternative-text="loading..."></lightning-spinner>
+            
+                <c-post-tiles onselectedpost={handleSelectedPost}></c-post-tiles>
+                
             </lightning-tab>
-            <lightning-tab icon-name="utility:description" label="Salesforce" value="salesforce" onactive={handleActiveTab}>
-                <!-- Salesforce Connection --> 
-                <c-credentials onlogin={handleLogin} offline={isOffline}></c-credentials>
-                <lightning-button if:true={isOnline} class="slds-align_absolute-center" label="Logout" variant="destructive" onclick={handleLogout}></lightning-button>
-                <!-- Salesforce Debugger --> 
-                <lightning-textarea label="Response" value={logger} class="slds-size_1-of-1" disabled></lightning-textarea>
+            <lightning-tab icon-name="utility:fallback" label="POSTS" value="details">
+                <c-post-details-page article-id={selectedPostId}></c-post-details-page>
             </lightning-tab>
+    
         </lightning-tabset>
     </div>
 

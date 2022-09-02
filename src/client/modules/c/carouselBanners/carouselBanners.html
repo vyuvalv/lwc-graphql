@@ -1,0 +1,31 @@
+<template>
+    <div class="carousel-wrapper">
+        <div class="carousel disabled-text">
+          <!-- Slides -->
+          <template if:true={hasRecords} for:each={banners} for:item="banner">
+            <div key={banner.index} class={banner.className}>
+              <img class="carousel-image" src={banner.image}/>
+              <h1 class="carousel-title">{banner.title}</h1>
+            </div>
+          </template>
+          <!-- Back -->
+          <div class="carousel-button-back" onclick={handlePrevious}>
+            <span class="arrow-icon-left disabled-text"> &#8249; </span>
+          </div>
+          <!-- DOTS -->
+          <div class="carousel-dots" if:true={showDots}>
+            <template if:true={hasRecords} for:each={dots} for:item="dot">
+              <div key={dot.index} class={dot.className} data-index={dot.index} onclick={handleSelectedDot}></div>
+            </template>
+          </div>
+           <!-- NEXT -->
+          <div class="carousel-button-next" onclick={handleForward}>
+            <span class="arrow-icon-right disabled-text">  &#8250; </span>
+          </div>
+          <!-- AUTO PLAY -->
+          <lightning-button-icon class="carousel-button-play" icon-name={playButtonIcon} variant="border-filled"  onclick={handleAutoPlay}></lightning-button-icon>
+        
+        </div>
+    </div>
+
+</template>

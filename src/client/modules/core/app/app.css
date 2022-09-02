@@ -9,3 +9,6 @@
 .app-content {
     height:100%;
 }
+.app-carousel {
+   position: relative;
+}

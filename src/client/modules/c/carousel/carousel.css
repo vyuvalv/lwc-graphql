@@ -1,7 +1,5 @@
 :host{
     --slider-height:20rem;
-    --slide-layer-900:900;
-    --slide-layer-800:800;
 }
 .carousel-wrapper {
     overflow: hidden;
@@ -16,18 +14,8 @@
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
-.carousel-image {
-    width: 100%;
-    min-width: 5rem;
-    height: 100%;
-}
-.carousel-title{
-    position: absolute;
-    bottom: 0;
-    font-size: large;
-    font-weight: bold;
-}
-.carousel-slide-item {
+
+.carousel__photo {
     opacity: 0;
     position: absolute;
     top:0;
@@ -39,31 +27,31 @@
     transition: transform .5s, opacity .5s, z-index .5s;
 }
 
-.carousel-slide-item.initial,
-.carousel-slide-item.active {
+.carousel__photo.initial,
+.carousel__photo.active {
     opacity: 1;
     position: relative;
-    z-index: var(--slide-layer-900);
+    z-index: 900;
 }
 
 /* Set 'z-index' to sit behind our '.active' item. */
-.carousel-slide-item.prev,
-.carousel-slide-item.next {
-    z-index: var(--slide-layer-800);
+.carousel__photo.prev,
+.carousel__photo.next {
+    z-index: 800;
 }
 /* Translate previous item to the left */
-.carousel-slide-item.prev {
+.carousel__photo.prev {
     transform: translateX(-100%);
 }
 
 /* Translate next item to the right */
-.carousel-slide-item.next {
+.carousel__photo.next {
     transform: translateX(100%);
 }
   
 /* Style navigation buttons to sit in the middle, either side of the carousel. */
-.carousel-button-back,
-.carousel-button-next {
+.carousel__button--prev,
+.carousel__button--next {
     position: absolute;
     top:50%;
     width: 3rem;
@@ -72,23 +60,23 @@
     transform: translateY(-50%);
     border-radius: 50%;
     cursor: pointer; 
-    z-index: 1001;
+    z-index: 1001; /* Sit on top of everything */
     border:1px solid black;
   /*  opacity: 0;  Hide buttons until carousel is initialised 
     transition:opacity 1s;*/
   }
   
-  .carousel-button-back {
+  .carousel__button--prev {
     left:0;
   }
   
-  .carousel-button-next {
+  .carousel__button--next {
     right:0;
   }
   
   /* Use pseudo elements to insert arrows inside of navigation buttons */
-  .carousel-button-back::after,
-  .carousel-button-next::after {
+  .carousel__button--prev::after,
+  .carousel__button--next::after {
     content: " ";
     position: absolute;
     width: 10px;
@@ -100,7 +88,7 @@
     transform: translate(-50%, -50%) rotate(135deg);
   }
   
-  .carousel-button-next::after {
+  .carousel__button--next::after {
     left: 47%;
     transform: translate(-50%, -50%) rotate(-45deg);
   }

@@ -1,0 +1,30 @@
+<template>
+    <div if:true={post} class="wp-post-details">
+        <div class="wp-post-image-container">   
+            <img src={blogImage} class="wp-post-image"/>
+        </div>
+        <!-- <div class="wp-post-header">{title}</div> -->
+        <lightning-formatted-rich-text class="wp-post-header" value={title}></lightning-formatted-rich-text>
+        <div class="wp-post-subheader">
+            <div class="wp-post-tags">
+                <h1 class="section-title">Tags</h1>
+                <template if:true={tags} for:each={tags} for:item="tag">
+                    <lightning-badge key={tag.ID} label={tag.name} class="wp-post-badge"></lightning-badge>
+                </template>
+            </div>
+            <div class="wp-post-categories">
+                <h1 class="section-title">Categories</h1>
+                <template if:true={categories} for:each={categories} for:item="cat">
+                    <lightning-badge key={cat.ID} label={cat.name} class="slds-m-vertical_x-small wp-post-badge"></lightning-badge>
+                </template>
+            </div>
+        </div>
+        <div class="wp-post-content">
+            <lightning-formatted-rich-text value={blogExcerpt}></lightning-formatted-rich-text>
+
+            Content:
+            <lightning-formatted-rich-text value={blogContent}></lightning-formatted-rich-text> 
+        </div>
+        <div class="wp-post-footer"></div>
+    </div>
+</template>

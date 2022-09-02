@@ -1,0 +1,50 @@
+<template>
+    <div class="wp-posts slds-grid slds-wrap">
+        <div class="wp-search-header slds-size_1-of-1">
+          <!-- SEARCH PROJECT BAR -->
+            <lightning-input class="slds-align-content-center" 
+            type="search"
+            name="searchInput" 
+            value={keyword} 
+            placeholder="Search in blog..."
+            label="Blog Search" 
+            onchange={handleBlogSearch}></lightning-input>
+
+            <lightning-combobox
+                name="categories"
+                label="Categories"
+                value={selectedCategory}
+                placeholder="Select Category"
+                options={categoriesOptions}
+                onchange={handleCategoryChange} ></lightning-combobox>
+
+            <lightning-combobox
+                name="tags"
+                label="Tags"
+                value={selectedTag}
+                placeholder="Select Tag"
+                options={tagsOptions}
+                onchange={handleTagChange} ></lightning-combobox>
+            
+            <lightning-button class="slds-align-bottom" label="Search" onclick={handleSearch}></lightning-button>
+
+        </div>
+
+        <ul class="slds-size_1-of-1 slds-grid slds-wrap slds-gutters_direct-small">
+        <template if:true={posts.length} for:each={posts} for:item="post">
+            <li key={post.ID} class="slds-col slds-m-vertical_small slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3">
+                <c-post-tile layout="tile" post={post}  ></c-post-tile>
+            </li>
+        </template>
+        </ul>
+        <!-- Pagination -->
+        <div class="wp-search-footer">
+            
+            <lightning-button disabled={isFirstPage} label="back" onclick={goBack}></lightning-button>
+            <div>
+               {currentPage} / {totalPages}
+            </div>
+            <lightning-button disabled={isLastPage} label="next" onclick={goNext}></lightning-button>
+        </div>
+    </div>
+</template>

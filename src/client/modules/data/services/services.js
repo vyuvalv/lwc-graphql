@@ -3,7 +3,8 @@
  */
 export async function getData(query) {
     const endpoint = `/api/graphql`;
-    console.log('query : ' + query.query);
+    // console.log('query : ' + query.query);
+    
     try {
         const response = await fetch(endpoint, {
             method: 'POST',

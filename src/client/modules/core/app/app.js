@@ -1,8 +1,8 @@
 import { LightningElement, api, track } from 'lwc';
-import { getData } from '../../data/services/services';
 
-const menuTabs = ['home', 'salesforce'];
+const menuTabs = ['home', 'details'];
 const LOGO = './resources/lwc.png';
+const SAMPLE_POST = { "ID": "512", "title": "Salesforce Certified Development Lifecycle and Deployment Designer &#8211; Study guide", "featured_image": "", "excerpt": "<p>Capturing all details I&#8217;ve managed to find about this exam. Helped me organise my thoughts but might help other as well. About this Credential&nbsp; The Salesforce Certified Development Lifecycle and Deployment Designer credential is designed for professionals who have the requisite skills and experience in managing Lightning Platform development and deployment activities as well as [&hellip;]</p>\n", "tags": [{ "ID": "11198", "name": "Certification" }, { "ID": "21448", "name": "deploy" }, { "ID": "97017", "name": "salesforce" }], "categories": [{ "ID": "11198", "name": "Certification" }] };
 
 export default class App extends LightningElement {
     @api
@@ -20,7 +20,7 @@ export default class App extends LightningElement {
     @track alert = {};
     showAlert = false;
 
-    message = 'Whoo hooo!!';
+    siteId = '153067956';
     @track _logger = 'Nothing to show yet';
     @track errors;
     loading = false;
@@ -34,93 +34,20 @@ export default class App extends LightningElement {
         this.navigate(activeTab);
     }
 
-    // Intro input message
-    handleInputChange(event) {
-        this.message = event.target.value;
+    _selectedPostId;
+
+    handleSelectedPost(event) {
+        const { postId, post } = event.detail;
+        this.navigate(`details`);
+        this._selectedPostId = postId;
+        console.log('postId ' + postId);
+        const detailPage = this.template.querySelector('c-post-details-page');
+        if(detailPage)
+        detailPage.fetchPost(postId);
+        
     }
-
-    async handleSendMessage() {
-        // Get Message Value
-        const messageBody = this.message.length > 1 ? this.message : 'None';
-        // Build query
-        const graphQuery = {
-            query: `{ hello(message:"${messageBody}") }`
-        };
-        // Run Query
-        this.loading = true;
-        try {
-            const response = await getData(graphQuery);
-            if (response.data) {
-                console.log('SUCCESS ' + JSON.stringify(response));
-                this.loading = false;
-                this._logger = response.data;
-            }
-
-        } catch (err) {
-            console.log('error : ' + JSON.stringify(err));
-        }
-    }
-
-    // Handle Salesforce Login
-    isOnline;
-    isOffline = !this.isOnline;
-
-    async handleLogin(event) {
-        // gets input values from child component
-        const credentials = event.detail;
-        const graphQuery = {
-            query: `{
-                login( credentials: ${JSON.stringify(credentials.formInputs).replace(/"([^"]+)":/g, '$1:')} ){
-                    userId
-                    accessToken
-                    loggedInDate
-                    loggedInUser { Name }
-                }
-            }`
-        }
-        // Run Query
-        this.loading = true;
-        try {
-            const response = await getData(graphQuery);
-            if (response.data) {
-                console.log('Login Succesfully ' + JSON.stringify(response));
-                this.loading = false;
-                this._logger = response.data;
-                this.toggleOnline(true);
-            }
-
-        } catch (err) {
-            console.log('Error on login : ' + JSON.stringify(err));
-        }
-    }
-
-    async handleLogout(event) {
-        const graphQuery = {
-            query: `{
-                logout{
-                    success
-                    timestamp
-                }
-            }`
-        }
-        try {
-            this.loading = true;
-            const response = await getData(graphQuery);
-            if (response.data) {
-                console.log('Logout Succesfully ' + JSON.stringify(response));
-                this.loading = false;
-                this._logger = response.data;
-                this.toggleOnline(false);
-            }
-
-        } catch (err) {
-            console.log('error : ' + JSON.stringify(err));
-        }
-    }
-
-    toggleOnline(toggle) {
-        this.isOnline = toggle;
-        this.isOffline = !toggle;
+    get selectedPostId() {
+        return this._selectedPostId;
     }
 
     // handle messages from child components

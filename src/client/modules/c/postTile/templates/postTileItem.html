@@ -1,0 +1,26 @@
+<template>
+    <div class="wp-post-item">
+        <div class="wp-post-image-container">   
+            <img src={blogImage} class="wp-post-image"/>
+        </div>
+        <div class="wp-post-header">{title}</div>
+        <div class="wp-post-tags">
+            <template if:true={tags} for:each={tags} for:item="tag">
+                <lightning-badge key={tag.ID} label={tag.name} class="wp-post-badge"></lightning-badge>
+            </template>
+        </div>
+        <div class="wp-post-categories">
+            <template if:true={categories} for:each={categories} for:item="cat">
+                <lightning-badge key={cat.ID} label={cat.name} class="slds-m-vertical_x-small wp-post-badge"></lightning-badge>
+            </template>
+        </div>
+        <div class="wp-post-content">
+            <lightning-formatted-rich-text value={blogExcerpt}></lightning-formatted-rich-text>
+            <!-- <lightning-formatted-rich-text value={blogContent}></lightning-formatted-rich-text> -->
+        </div>
+        <div class="wp-post-footer">
+            <lightning-button label="Read more" class="wp-post-footer-action" onclick={handleNavToPost}></lightning-button>
+
+        </div>
+    </div>
+</template>

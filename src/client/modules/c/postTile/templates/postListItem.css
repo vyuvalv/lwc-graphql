@@ -1,0 +1,15 @@
+.wp-post-header{
+    font-size:1.2rem;
+    font-weight: bold;
+}
+.wp-post-content{
+    grid-area: body;
+}
+.wp-post-footer{
+    grid-area: footer;
+}
+
+.wp-post-item{
+    display: flex;
+   
+}

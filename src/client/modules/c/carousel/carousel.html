@@ -1,0 +1,34 @@
+<template>
+    <div class="carousel-wrapper">
+        <div class="carousel">
+    
+          <img class="carousel__photo initial" src="http://placekitten.com/g/1600/900">
+          <img class="carousel__photo" src="http://placekitten.com/1600/900">
+          <img class="carousel__photo" src="http://placekitten.com/1600/900">
+          <img class="carousel__photo" src="http://placekitten.com/g/1600/900">
+          <img class="carousel__photo" src="http://placekitten.com/1600/900">
+          
+          <button class="carousel__button--next" onclick={handleForward}></button>
+          
+          <div class="carousel__button--prev" onclick={handlePrevious}></div>
+    
+        </div>
+      </div>
+
+    <section class="slider-wrapper">
+            <button class="slide-arrow slide-arrow-left" onclick={handleBack}>
+             <span class="arrow-icon-left"> &#8249; </span>
+            </button>
+             
+            <button class="slide-arrow slide-arrow-right" onclick={handleNext}>
+                <span class="arrow-icon-right">  &#8250; </span>
+            </button>
+             
+            <ul class="slides-container" >
+              <li class="slide"></li>
+              <li class="slide"></li>
+              <li class="slide"></li>
+              <li class="slide"></li>
+            </ul>
+    </section>
+</template>

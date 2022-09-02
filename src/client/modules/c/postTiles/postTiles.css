@@ -1,0 +1,10 @@
+.wp-search-header{
+    display: flex;
+    width: 100%;
+}
+.wp-search-footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
